@@ -1,7 +1,7 @@
 # CrowdStrike Falcon Linux Sensor Detection Test Container
 
 ## ⚠️ Disclaimer
-This is a community project and is not officially supported or affiliated with CrowdStrike. It is provided "as is" without warranty of any kind.
+This is a community project and is not officially supported or affiliated with CrowdStrike. It is provided "as is" without warranty of any kind. Use at your own risk. 
 
 ## Overview
 This container provides a safe, controlled environment for validating CrowdStrike Falcon Linux sensor detections. It generates various detection patterns to help confirm proper sensor deployment and configuration. All tests run as a non-root user, demonstrating CrowdStrike's ability to detect malicious behavior regardless of privilege level.
@@ -31,13 +31,12 @@ The container runs through the following detection scenarios:
 - Falcon sensor policies configured for:
   - Detection-only mode (not Prevention)
   - Enhanced Visibility enabled
-  - Sensor Visibility enabled
 
 ## Usage
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/linux-detection-container.git
+git clone https://github.com/kuhnskc/linux-detection-container.git
 cd linux-detection-container
 ```
 
@@ -70,16 +69,6 @@ After running the container, check your Falcon console for:
 - Tests run automatically and require no user interaction
 - Container automatically stops after completing all tests
 - All tests execute with non-root privileges
-
-## Troubleshooting
-If you don't see detections:
-1. Verify the Falcon sensor is running: `sudo falcon-sensor-version`
-2. Confirm policy settings are in detection-only mode
-3. Ensure Enhanced Visibility is enabled
-4. Check that Sensor Visibility is enabled
-
-## Contributing
-Contributions are welcome! Please feel free to submit pull requests or create issues for bugs and feature requests.
 
 ## License
 [MIT License](LICENSE)
