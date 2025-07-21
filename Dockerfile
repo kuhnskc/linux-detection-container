@@ -1,48 +1,54 @@
 FROM ubuntu:20.04
 
 # Prevent interactive prompts
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TERM=xterm-256color
+ENV DEBIAN_FRONTEND=noninteractive \
+    HOME=/home/detector \
+    USER_NAME=detector \
+    USER_UID=1001
 
-# Install necessary packages
+# Install required packages
 RUN apt-get update && apt-get install -y \
+    python3 \
     wget \
     curl \
     git \
     build-essential \
-    python3 \
     cmake \
     libuv1-dev \
     libssl-dev \
     libhwloc-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Create non-root user
-RUN useradd -m -s /bin/bash detector
+# Create user with specific UID
+RUN mkdir -p ${HOME} && \
+    groupadd -r detector && \
+    useradd -u ${USER_UID} -r -g detector -d ${HOME} -s /sbin/nologin -c "Detection user" detector && \
+    chown -R ${USER_UID}:detector ${HOME} && \
+    chmod -R g=u ${HOME}
 
-# Create working directory
-WORKDIR /home/detector/work
+# Set up work directory
+WORKDIR ${HOME}/work
 
-# Create scripts directory
-RUN mkdir -p /home/detector/work/scripts
+# Copy scripts
+COPY --chown=${USER_UID}:detector scripts/ ${HOME}/work/scripts/
 
-# Download and compile XMRig
+# Download and compile XMRig with verbose output
 RUN git clone https://github.com/xmrig/xmrig.git && \
     cd xmrig && \
     mkdir build && \
     cd build && \
-    cmake .. && \
-    make
-
-# Copy our test script
-COPY scripts/run_tests.sh /home/detector/work/scripts/
+    cmake -DCMAKE_BUILD_TYPE=Release .. && \
+    make VERBOSE=1 && \
+    chown -R ${USER_UID}:detector ${HOME}/work && \
+    chmod -R g=u ${HOME}/work
 
 # Set permissions
-RUN chmod +x /home/detector/work/scripts/run_tests.sh && \
-    chown -R detector:detector /home/detector/work
+RUN chmod +x ${HOME}/work/scripts/run_tests.sh && \
+    chown -R ${USER_UID}:detector ${HOME}/work && \
+    chmod -R g=u ${HOME}/work
 
 # Switch to non-root user
-USER detector
+USER ${USER_UID}
 
-# Run the test script directly
+# Run script
 CMD ["/home/detector/work/scripts/run_tests.sh"]
