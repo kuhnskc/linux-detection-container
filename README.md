@@ -1,16 +1,19 @@
-# CrowdStrike Falcon Linux Sensor Detection Test Container
+# CrowdStrike Falcon Linux Detection Container
 
-## ⚠️ Disclaimer
-This is a community project and is not officially supported or affiliated with CrowdStrike. It is provided "as is" without warranty of any kind. Use at your own risk. 
+## ⚠️ Disclaimer and Risk Notice
+This project is a community-developed tool and is **NOT** officially supported by CrowdStrike. Use at your own risk. While the container performs benign simulations, you should:
+- Review all code before running in your environment
+- Understand that this may generate security alerts in your environment
+- Be aware that running security test tools may violate some organizations' security policies
 
 ## Overview
-This container provides a safe, controlled environment for validating CrowdStrike Falcon Linux sensor detections. It generates various detection patterns to help confirm proper sensor deployment and configuration. All tests run as a non-root user, demonstrating CrowdStrike's ability to detect malicious behavior regardless of privilege level.
+This container provides a safe, controlled environment for validating CrowdStrike Falcon Linux sensor detections across Docker, Kubernetes, and OpenShift environments. It generates various detection patterns to help confirm proper sensor deployment and configuration.
 
 ### Detection Scenarios
 The container runs through the following detection scenarios:
 
 1. **File Masquerading Tests**
-   - Simulates malware attempting to masquerade as legitimate documents
+   - Simulates malware attempting to masquerading as legitimate documents
    - Tests multiple file extensions and execution patterns
    - Generates Defense Evasion detections
 
@@ -25,39 +28,36 @@ The container runs through the following detection scenarios:
    - Generates cryptocurrency mining detections
 
 ## Prerequisites
-
-- Docker installed and running
-- CrowdStrike Falcon sensor installed and running
-- Falcon sensor policies configured for:
+- CrowdStrike Falcon sensor installed
+- Falcon policies configured for:
   - Detection-only mode (not Prevention)
   - Enhanced Visibility enabled
 
-## Usage
-
-### 1. Clone the Repository
+## Docker:
 ```bash
 git clone https://github.com/kuhnskc/linux-detection-container.git
 cd linux-detection-container
+docker build -t detection-test .
+docker run --rm detection-test
 ```
 
-### 2. Build the Container
+## Kubernetes:
 ```bash
-docker build -t edr-test .
+kubectl create -f https://raw.githubusercontent.com/kuhnskc/linux-detection-container/main/deployments/job.yaml
 ```
-
-### 3. Run the Container
 ```bash
-docker run --name detection-test edr-test
+kubectl logs -f job/detection-test
 ```
 
-### What to Expect
-- The container will run through two iterations of tests
-- Each iteration includes file masquerading, credential collection, and cryptocurrency mining simulations
-- Total runtime is approximately 3-4 minutes
-- All activities are benign simulations - no systems will be harmed
-- All tests run as non-root user
+## OpenShift:
+```bash
+oc create -f https://raw.githubusercontent.com/kuhnskc/linux-detection-container/main/deployments/job.yaml
+```
+```bash
+oc logs -f job/detection-test
+```
 
-### Expected Detections
+## Expected Detections
 After running the container, check your Falcon console for:
 1. Multiple file masquerading detections (Defense Evasion)
 2. Credential access attempts (Collection)
@@ -69,6 +69,8 @@ After running the container, check your Falcon console for:
 - Tests run automatically and require no user interaction
 - Container automatically stops after completing all tests
 - All tests execute with non-root privileges
+- Container is multi-architecture (supports both AMD64 and ARM64)
+=======
 
 ## License
 [MIT License](LICENSE)
