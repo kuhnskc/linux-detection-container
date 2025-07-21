@@ -41,9 +41,7 @@ docker build -t detection-test .
 docker run --rm detection-test
 ```
 
-## Kubernetes/OpenShift Deployment
-
-For Kubernetes:
+## Kubernetes:
 ```bash
 kubectl create -f https://raw.githubusercontent.com/kuhnskc/linux-detection-container/main/deployments/job.yaml
 ```
@@ -51,7 +49,7 @@ kubectl create -f https://raw.githubusercontent.com/kuhnskc/linux-detection-cont
 kubectl logs -f job/detection-test
 ```
 
-For OpenShift:
+## OpenShift:
 ```bash
 oc create -f https://raw.githubusercontent.com/kuhnskc/linux-detection-container/main/deployments/job.yaml
 ```
