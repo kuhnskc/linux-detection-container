@@ -36,7 +36,7 @@ The container runs through the following detection scenarios:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/kuhnskc/linux-detection-container.git
+git clone https://github.com/jmckenzie-cs/linux-detection-container.git
 cd linux-detection-container
 ```
 
