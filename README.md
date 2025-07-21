@@ -35,6 +35,8 @@ The container runs through the following detection scenarios:
 
 ## Docker Deployment
 ```bash
+git clone https://github.com/kuhnskc/linux-detection-container.git
+cd linux-detection-container
 docker build -t detection-test .
 docker run --rm detection-test
 ```
