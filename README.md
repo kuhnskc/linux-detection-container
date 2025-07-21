@@ -32,7 +32,6 @@ The container runs through the following detection scenarios:
 - Falcon policies configured for:
   - Detection-only mode (not Prevention)
   - Enhanced Visibility enabled
-  - Sensor Visibility enabled
 
 ## Docker Deployment
 ```bash
@@ -70,3 +69,7 @@ After running the container, check your Falcon console for:
 - Container automatically stops after completing all tests
 - All tests execute with non-root privileges
 - Container is multi-architecture (supports both AMD64 and ARM64)
+=======
+
+## License
+[MIT License](LICENSE)
