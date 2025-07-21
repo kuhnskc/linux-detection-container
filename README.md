@@ -33,7 +33,7 @@ The container runs through the following detection scenarios:
   - Detection-only mode (not Prevention)
   - Enhanced Visibility enabled
 
-## Docker Deployment
+## Docker:
 ```bash
 git clone https://github.com/kuhnskc/linux-detection-container.git
 cd linux-detection-container
