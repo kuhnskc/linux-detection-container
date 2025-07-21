@@ -9,17 +9,6 @@ CYAN="\033[0;36m"
 BOLD="\033[1m"
 NC="\033[0m"
 
-#!/bin/bash
-
-# Colors for output
-GREEN="\033[0;32m"
-BLUE="\033[0;34m"
-RED="\033[0;31m"
-YELLOW="\033[1;33m"
-CYAN="\033[0;36m"
-BOLD="\033[1m"
-NC="\033[0m"
-
 # Welcome message
 clear
 echo -e "\n${YELLOW}╔══════════════════════════════════════════════════════════╗${NC}"
